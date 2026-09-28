@@ -1,0 +1,34 @@
+# seeds python/numpy/torch and, through seed_everything(workers=True), every dataloader worker
+seed: 17
+trainer:
+  accelerator: "gpu"
+  devices: 1
+  precision: "bf16-mixed"
+  limit_val_batches: 0
+  enable_checkpointing: False
+  gradient_clip_val: 1
+  deterministic: true
+  max_steps: 1500
+  num_sanity_val_steps: 0
+data:
+  eval_folds: []
+  train_batch_size: 64
+  eval_batch_size: 128
+  num_workers: 20 # do not change for reproducibility
+model:
+  hf_repo: nvidia/C-RADIOv4-SO400M
+  revision: c0457f5dc26ca145f954cd4fc5bb6114e5705ad8
+  image_size: [272, 368] # [height, width]
+  dim: 2304 # summary width: 2 teacher cls tokens x 1152
+  gradient_checkpointing: true
+  ema_decay: 0.998
+  freeze_position_embedding: true # for reproducibility
+  learning_rate: 1e-5
+  weight_decay: 0.05
+  llrd: # layer-wise learning rate
+    decay: 0.9
+    top_mult: 3.
+  arcface:
+    margin: 0.7
+    scale: 30
+    lr_mult: 10.

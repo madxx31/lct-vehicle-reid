@@ -1,0 +1,9 @@
+*
+!pyproject.toml
+!uv.lock
+!inference/
+!train/encoder/
+!models/vehicle_encoder.pt
+!models/confidence_model.cbm
+**/__pycache__
+**/*.pyc

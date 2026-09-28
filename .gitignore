@@ -1,0 +1,8 @@
+data/*
+!data/.gitkeep
+lightning_logs
+__pycache__
+.venv
+models/*
+!models/.gitkeep
+oof_preds

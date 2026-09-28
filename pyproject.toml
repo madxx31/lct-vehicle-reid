@@ -1,0 +1,36 @@
+[project]
+name = "lctautofinal"
+version = "0.1.0"
+requires-python = "==3.14.*"
+# Every direct dependency is pinned exactly; uv.lock pins the transitive ones too,
+# and that lock is what the Docker image installs (`uv sync --frozen`).
+dependencies = [
+    "catboost==1.2.10",
+    "einops==0.8.2",
+    "huggingface-hub==1.31.0",
+    "matplotlib==3.11.2",
+    "numpy==2.5.3",
+    "omegaconf==2.3.1",
+    "pandas==3.0.5",
+    "pytorch-lightning==2.6.6",
+    "scikit-learn==1.9.1",
+    "timm==1.0.29",
+    "torch==2.14.0",
+    "torchvision==0.29.0",
+    "transformers==5.17.0",
+    "wandb==0.30.0",
+]
+
+[tool.uv]
+package = false
+
+# CUDA 12.6 builds: they run on drivers from 525 up (CUDA 12.x minor version compatibility), including
+# the 535 / CUDA 12.2 target system. PyPI's default torch 2.14 is built for CUDA 13 and needs driver 580+
+[tool.uv.sources]
+torch = { index = "pytorch-cu126" }
+torchvision = { index = "pytorch-cu126" }
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
